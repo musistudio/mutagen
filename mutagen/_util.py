@@ -232,7 +232,8 @@ def _openfile(instance, filething, filename, fileobj, writable, create):
 
         inmemory_fileobj = False
         try:
-            fileobj = open(filename, "rb+" if writable else "rb")
+            fileobj = open(filename) if isinstance(filename, BytesIO) else open(filename, "rb+" if writable else "rb");
+#           fileobj = open(filename, "rb+" if writable else "rb")
         except IOError as e:
             if writable and e.errno == errno.EOPNOTSUPP:
                 # Some file systems (gvfs over fuse) don't support opening
